@@ -1,37 +1,76 @@
 import { useState } from "react";
-import reactLogo from "./assets/react.svg";
-import viteLogo from "/vite.svg";
 import "./App.css";
-import { Button } from "@/components/ui/button";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import Seats from "@/components/seats";
+import { Seat } from "./components/types";
+
+const seats: Seat[] = [
+  {
+    type: "chair",
+    number: 1,
+    occupied: [1, 1, 1, 1, 1, 1],
+  },
+  {
+    type: "chair",
+    number: 2,
+    occupied: [1, 1, 1, 1, 1, 1],
+  },
+  {
+    type: "chair",
+    number: 3,
+    occupied: [1, 1, 1, 1, 1, 1],
+  },
+  {
+    type: "chair",
+    number: 4,
+    occupied: [1, 1, 1, 1, 1, 1],
+  },
+  {
+    type: "chair",
+    number: 5,
+    occupied: [1, 1, 1, 1, 1, 1],
+  },
+  {
+    type: "bed",
+    number: 1,
+    occupied: [1, 1, 1, 1, 1, 1],
+  },
+  {
+    type: "bed",
+    number: 2,
+    occupied: [1, 1, 1, 1, 1, 1],
+  },
+];
 
 function App() {
-  const [count, setCount] = useState(0);
-
+  const [type, setTab] = useState("all");
+  const onTabChange = (value: string) => {
+    setTab(value);
+  };
   return (
     <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <Button
-          variant="default"
-          onClick={() => setCount((count) => count + 1)}
-        >
-          count is {count}
-        </Button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
+      <Tabs className="w-full" defaultValue="all" onValueChange={onTabChange}>
+        <TabsList className="tab-list">
+          <TabsTrigger value="all" className="tab-button">
+            全部
+          </TabsTrigger>
+          <TabsTrigger value="chair" className="tab-button">
+            椅
+          </TabsTrigger>
+          <TabsTrigger value="bed" className="tab-button">
+            床
+          </TabsTrigger>
+        </TabsList>
+        <TabsContent className="tab-content" value="all">
+          <Seats seats={seats} type={type}></Seats>
+        </TabsContent>
+        <TabsContent className="tab-content" value="chair">
+          <Seats seats={seats} type={type}></Seats>
+        </TabsContent>
+        <TabsContent className="tab-content" value="bed">
+          <Seats seats={seats} type={type}></Seats>
+        </TabsContent>
+      </Tabs>
     </>
   );
 }
